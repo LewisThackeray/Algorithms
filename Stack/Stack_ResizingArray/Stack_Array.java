@@ -1,13 +1,13 @@
 import java.util.Iterator; // Importing the Iterator Class from the java.util Package to Loop through the Stack.
 import java.util.NoSuchElementException; // Impoting the NoSuchElementException Class from the java.util Package to Raise a Runtime Exception when there is an Attempt to Access an Item in the Stack that doesn't Exist.
 
-class Stack_Array<Item> implements Iterable<Item> { // This Class implements a Stack using a Resizable Array, utiliising Generics to improve the Reusability of my Code.
+class Stack_ResizingArray<Item> implements Iterable<Item> { // This Class implements a Stack using a Resizable Array, utilising Generics to improve the Reusability of my Code.
 
     private static final int initialStackCapacity = 8; // Defining a Variable that Stores the Initial Size of the Stack.
     private Item[] stackItems; // Declaring an Array which will Store the Items in my Stack.
     private int N; // Declaring a Variable which will Store the Number of Items in the Stack.
 
-    public Stack_Array() {stackItems = (Item[]) new Object[initialStackCapacity];} // Creating the Constructor for the Class which Defines an Array of type Item which has initialStackCapacity elements.
+    public Stack_ResizingArray() {stackItems = (Item[]) new Object[initialStackCapacity];} // Creating the Constructor for the Class which Defines an Array of type Item which has initialStackCapacity elements.
 
     private void resize(int newCapacity) { // This method is responsible for Dynamically Changing the Size of the Array based on the Number of Items in the Stack to prevent Overflow Errors and Wasted Memory.
         assert newCapacity >= N; // Using an Assertion to Check if newCapacity is >= N - if newCapacity < N then the program throws an AssertionError. || ** REMEMBER TO ENABLE ASSERTIONS DURING RUNTIME ** ||
@@ -42,25 +42,28 @@ class Stack_Array<Item> implements Iterable<Item> { // This Class implements a S
     private class ReverseArrayIterator implements Iterator<Item> { // This Inner-Class is responsible for Iterating over the Array in LIFO Order.
         private int index; // Declaring a Variable that is Used to track the Index of the Item in the Array.
         public ReverseArrayIterator() {index = N - 1;} // Creating the Constructor for the Inner-Class which Defines the index Variable setting its value to the Index of the Item at the Top of the Stack.
-        public boolean hasNext() {return index >= 0;} // This method is reponsible for Testing if there is another element in the Stack to Iterate through.
+        public boolean hasNext() {return index >= 0;} // This method is responsible for Testing if there is another element in the Stack to Iterate through.
         public Item next() { // This method is responsible for Returning the Next Item in the Array.
             if (!hasNext()) {throw new NoSuchElementException();} return stackItems[index--]; // Checking if the Iterator has reached the End of the Stack - Returning an NoSuchElementException if it has - otherwise, Returning the Next Element in the Array.
         }
     }
 
     @Override // Overriding the toString() method provided in the Superclass as I want to provide an Implementation for Specific to my Stack.
-    public String toString() { // This method is reponsible for Representing the Stack as a String to make the Operations on the Stack easier to understanding during Debugging and Testing.
+    public String toString() { // This method is responsible for Representing the Stack as a String to make the Operations on the Stack easier to understanding during Debugging and Testing.
         StringBuilder myStringBuilder = new StringBuilder(); // Creating an Object of the StringBuilder Class to Create the String.
         if (!isEmpty()) { // If the Stack is not Empty - we can Create a String Representing the Stack.
-            myStringBuilder.append("|").append(stackItems[N-1]).append("| => TOP OF THE STACK\n"); for (int i = N - 2; i >= 0; i--) {myStringBuilder.append("|").append(stackItems[i]).append("|\n");} myStringBuilder.append("|").append(stackItems[0]).append("| => BOTTOM OF THE STACK\n"); // Iterating through the Stack creating the Representation, marking the Top and Bottom of the Stack clearly.
+            for (int i = N - 1; i >= 0; i--) { // Using a for Loop to Iterate through the Stack.
+                if (i == N - 1) {myStringBuilder.append("|").append(stackItems[N-1]).append("| => TOP OF THE STACK\n");} else if (i == 0) {myStringBuilder.append("|").append(stackItems[0]).append("| => BOTTOM OF THE STACK\n");} // If we are Examining an Item which is at the Top or Bottom of the Stack - we should Mark it Clearly.
+                else {myStringBuilder.append("|").append(stackItems[i]).append("|\n");} // If we are not examining the Top or Bottom Item, we Display the Item without any Additional Text.
+            }
         } return myStringBuilder.toString(); // Returning the Representation String of the Array back to the Caller.
     }
 
     public static void main(String[] args) { // Creating some Unit Tests to Test the Stack_Array Class.
-        Stack_Array<String> cars = new Stack_Array<String>(); // Creating an Object of the Stack_Array Class of Type String.
+        Stack_ResizingArray<String> cars = new Stack_ResizingArray<String>(); // Creating an Object of the Stack_Array Class of Type String.
         cars.push("Volvo"); cars.push("Mercedes"); cars.push("Nissan"); // Pushing Items onto the Stack.
         System.out.println("Top Element: " + cars.peek()); // Peeking the Top Item on the Stack.
-        System.out.println("Cars Stack: " + cars); // Displaying the Stack after the Items have been Pushed onto the Stack.
+        System.out.println("Cars Stack: \n" + cars); // Displaying the Stack after the Items have been Pushed onto the Stack.
 
         System.out.println("Popped: " + cars.pop()); System.out.println("Popped: " + cars.pop()); System.out.println("Popped: " + cars.pop()); // Popping the Three Items Off the Stack.
     }
