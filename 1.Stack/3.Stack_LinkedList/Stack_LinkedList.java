@@ -6,7 +6,7 @@ class Stack_LinkedList<Item> implements Iterable<Item> { // This Class implement
     private int N; // Declaring a Variable which will Store the Number of Items in my Stack.
     private Node first; // Declaring a Variable of type Node which stores the Node at the Top of the Stack.
 
-    private class Node {private Item item; private Node next; private Node previous;} // Creating an Inner-Class used to Represent a Node in the Linked List, where the Linked List is Doubly-Linked.
+    private class Node {private Item item; private Node next;} // Creating an Inner-Class used to Represent a Node in the Linked List, where the Linked List is Singly-Linked.
 
     private boolean check() { // This method is responsible for ensuring that the Stack maintains its Integrity and Invariants during its Operation by Performing Checks to Validate the State of the Stack.
         if ((N == 0 && first != null) || (N > 0 && (first == null || (N == 1 && first.next != null)))) return false; // Checking the Size of the Stack and Verifying the Consistency of the Nodes in the Stack - if there are Inconsistencies, then false is Returned.
