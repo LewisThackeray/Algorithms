@@ -15,6 +15,8 @@ public class Bag_LinkedList<Item> implements Iterable<Item> { // This Class impl
     public void add(Item item) { // This method is responsible for Adding an Element to the Bag.
          // Creating a New Node to Insert the New Node at the Front of the Linked List and Incrementing the Variable which Stores the Number of Elements in the Bag (the Number of Nodes in the Linked List).
         Node oldFirst = first; first = new Node(); first.item = item; first.next = oldFirst; N++; 
+    }
+    
     public Iterator<Item> iterator() {return new LinkedListIterator();} // This method returns an Instance of the LinkedListIterator Class.
 
     private class LinkedListIterator implements Iterator<Item> { // This Inner-Class is responsible for Iterating over the Linked List.
