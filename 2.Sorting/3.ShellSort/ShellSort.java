@@ -4,28 +4,31 @@ import java.util.Comparator; // Importing the Comparator Class from the java.uti
  * @author LewisThackeray
  * @date 24/03/2025
  *
- * {@code SelectionSort} provides Static Methods for Sorting an Array using <em>Selection Sort</em>, using Generics to ensure the Flexibility of my Implementation so that it supports Customised
- * Sorting Orders through the use of Comparator, as well as Generic Data Types through Comparable and Object[].  <em>Selection Sort</em> works as follows:
+ * {@code ShellSort} provides Static Methods for Sorting an Array using <em>Shell Sort</em>, using Generics to ensure the Flexibility of my Implementation so that it supports Customised Sorting
+ * Orders through the use of Comparator, as well as Generic Data Types through Comparable and Object[].<em>Shell Sort</em> works as follows:
  * <ol>
- *     <li>First, find the Smallest Item in the Array and Exchange it with the First Entry (itself if the First Entry is the Smallest).</li>
- *     <li>Then, find the next Smallest Item and Exchange it with the Second Entry.</li>
- *     <li>Continue in this way until the entire array is sorted.</li>
+ *     <li>The first step in Shellsort is to choose a sequence of gap values.  A common initial sequence starts with a large gap and then reduces it by a factor after each pass.  For example,
+ *     the sequence could be [5,3,1] for an array size of 10.</li>
+ *     <li>For each gap value, perform an insertion sort, but instead of comparing adjacent elements, compare elements that are <i>gap</i> positions apart.  This helps to partially sort the array
+ *     by moving elements closer to their final positions.</li>
+ *     <li>After completing the sorting for one gap, reduce the gap and repeat the insertion sort for the new gap.  The array becomes more sorted after each pass.</li>
+ *     <li>When the gap reduces to 1, the algorithm performs a regular insertion sort, which should now be much faster because the list is already partially sorted.</li>
  * </ol>
  *
- * <p><b>Time Complexity of Selection Sort:</b> The Best, Average and Worst Case Time Complexity is O(n<sup>2</sup>) because the Algorithm always performs the same Number of Comparisons and
- * Swaps, irrespective of the Input Array.</p>
+ * <p><b>Time Complexity of Shell Sort:</b> The Best Case Time Complexity is O(nlog(n)) when the gap sequence leads to a nearly sorted array quickly.  The Time Complexity is heavily influenced by
+ * the gap sequence, therefore, the Average and Worst Case Time Complexity for Shell Sort is O(n(log(n))<sup>2</sup>).</p>
  *
- * <p><b>Space Complexity of Selection Sort:</b> The Algorithm uses Constant Extra Space, making its Worst-Case Space Complexity O(1).</p>
+ * <p><b>Space Complexity of Shell Sort:</b> The Algorithm uses Constant Empty Space making it's Worst Case Space Compelxity O(1).</p>
  */
 
-public class SelectionSort {
+public class ShellSort {
 
     /**
-     * This is the Class Constructor.  The Class Constructor is Private to Prevent Instantiations of the Class, as the Class is Designed as a Utility Class with only Static
-     * Methods for performing Selection Sort Operations.  Direct Instantiation is NOT Supported.
+     * This is a Class Constructor.  The Class Constructor is Private to Prevent Instantiations of the Class, as the Class is Designed as a Utility Class with only Static Methods for Performing
+     * Shell Sort Operations.  Direct Instantiation is NOT supported.
      */
 
-    private SelectionSort() {}
+    private ShellSort() {}
 
     /**
      * This method rearranges the Array in Ascending Order, using the Natural Order and using Assertion Statements to Verify this Order.
@@ -33,27 +36,23 @@ public class SelectionSort {
      */
 
     public static <T extends Comparable<? super T>> void sort(T[] array) {
-        for (int i = 0; i < array.length; i++) {
-            int min = i; for (int j = i + 1; j < array.length; j++) {
-                if (less(array[j], array[min])) min = j;
-            }
-            swap(array, i, min); assert isSorted(array, 0, i);
-        } assert isSorted(array);
+        int h = 1; while (h < array.length / 3) h = 3 * h + 1; // Generating the Intial Gap using the 3n + 1 Sequence.
+        while (h >= 1) {
+            for (int i = h; i < array.length; i++) {for (int j = i; j >= h && less(array[j], array[j - h]); j -= h) {swap(array, j, j - h);} h = h / 3;}
+        }; assert(isSorted(array));
     }
 
     /**
      * This method rearranges the Array where the Order is Specified by the Comparator and Assertion Statements are used to Verify this Order.
      * @param array is the Array to be Sorted.
-     * @param comparator is the Comparator Specifying the Order.
      */
 
     public static <T> void sort(T[] array, Comparator<? super T> comparator) {
-        for (int i = 0; i < array.length; i++) {
-            int min = i; for (int j = i + 1; j < array.length; j++) {
-                if (less(comparator, array[j], array[min])) {min = j;}
-            } swap(array, i, min); assert isSorted(array, comparator, 0, i);
-        }
-        assert isSorted(array, comparator);
+        int h = 1; while (h < array.length / 3) h = 3 * h + 1; // Generating the Intial Gap using the 3n + 1 Sequence.
+        while (h >= 1) {
+            for (int i = h; i < array.length; i++) {for (int j = i; j >= h && less(comparator, array[j], array[j - h]); j -= h) {swap(array, j, j - h);} h = h / 3;}
+        }; assert(isSorted(array, comparator));
+
     }
 
     /**
@@ -134,23 +133,23 @@ public class SelectionSort {
     private static <T> void show(T[] array) {for (int i = 0; i < array.length; i++) {System.out.println(array[i]);}}
 
     /**
-     * This method tests the {@code SelectionSort} Class by Performing a Selection Sort on a Arrays of Different Types and by Sorting the Arrays in Different Ways..
+     * This method tests the {@code ShellSort} Class by Performing a Shell Sort on the Arrays of Different Types and by Sorting the Arrays in Different Ways.
      * @param args the Command Line Arguments.
      */
     public static void main(String[] args) {
 
         // Testing the Sort Method with an Array of Integers which Sorts the Array in the Natural Ascending Order.
-        Integer[] integerArray = {72,83,45,67,52,64,8,0,11,46,76,34,23,147,89,90,100,10,1000,999,78,435,678}; SelectionSort.sort(integerArray); show(integerArray);
+        Integer[] integerArray = {72,83,45,67,52,64,8,0,11,46,76,34,23,147,89,90,100,10,1000,999,78,435,678}; ShellSort.sort(integerArray); show(integerArray);
 
         // Testing the Sort Method with an Array of Integers which Sorts the Array with a Customised Comparator in Descending Order.
-        Comparator<Integer> descending = Comparator.reverseOrder(); SelectionSort.sort(integerArray, descending); show(integerArray);
+        Comparator<Integer> descending = Comparator.reverseOrder(); ShellSort.sort(integerArray, descending); show(integerArray);
 
         // Testing the Sort Method with an Array of Strings which Sorts the Array Lexicographically in the Natural Order.
         String[] stringArray = {"Apple", "Nala", "Tigger", "Pusscat", "Spatula", "Knife", "Spoon", "Fork", "Lewis", "Ethan", "Pizza", "Diet Coke", "Bread", "Salad", "Table", "Chairs"};
-        SelectionSort.sort(stringArray); show(stringArray);
+        ShellSort.sort(stringArray); show(stringArray);
 
         // Testing the Sort Method with an Array of Strings which Sorts the Array with a Customised Comparator which Sorts the Strings based on their Length.
-        Comparator<String> byLength = Comparator.comparingInt(String::length); SelectionSort.sort(stringArray, byLength); show(stringArray);
+        Comparator<String> byLength = Comparator.comparingInt(String::length); ShellSort.sort(stringArray, byLength); show(stringArray);
 
         System.out.println("\n\n All Tests Passed Successfully!!!");
 
