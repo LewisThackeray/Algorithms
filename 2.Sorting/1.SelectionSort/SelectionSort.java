@@ -2,7 +2,7 @@ import java.util.Comparator; // Importing the Comparator Class from the java.uti
 
 /**
  * @author LewisThackeray
- * @date 24/05/2025
+ * @date 24/03/2025
  *
  * {@code SelectionSort} provides Static Methods for Sorting an Array using <em>Selection Sort</em>, using Generics to ensure the flexibility of my implementation so that it supports customised
  * sorting orders through the use of Comparator, as well as generic data types through Comparable and Object[].  <em>Selection Sort</em> works as follows:
@@ -12,10 +12,10 @@ import java.util.Comparator; // Importing the Comparator Class from the java.uti
  *     <li>Continue in this way until the entire array is sorted.</li>
  * </ol>
  *
- * <p><b>Time Complexity of Selection Sort:</b> The Best, Average and Worst Case Time Complexity is 0(n<sup>2</sup>) because the Algorithm always performs the same Number of Comparisons and
+ * <p><b>Time Complexity of Selection Sort:</b> The Best, Average and Worst Case Time Complexity is O(n<sup>2</sup>) because the Algorithm always performs the same Number of Comparisons and
  * Swaps, irrespective of the Input Array.</p>
  *
- * <p><b>Space Complexity of Selection Sort:</b> The Algorithm uses Constant Extra Space, making its Worst-Case Space Complexity 0(1).</p>
+ * <p><b>Space Complexity of Selection Sort:</b> The Algorithm uses Constant Extra Space, making its Worst-Case Space Complexity O(1).</p>
  */
 
 public class SelectionSort {
@@ -105,7 +105,7 @@ public class SelectionSort {
     }
 
     /**
-     * This method checks that an Entire Array is Sorted Accoding to the Comparator.
+     * This method checks that an Entire Array is Sorted According to the Comparator.
      * @param array is the Array to Check.
      * @param comparator is the Comparator Specifying the Order.
      * @return true if the Array is Sorted, false Otherwise.
@@ -116,7 +116,7 @@ public class SelectionSort {
     /**
      * This method checks if a Segment of the Array (from low to high - inclusive) is Sorted According to the Comparator.
      * @param array is the Array to Check.
-     * @comparator is the Comparator Specifiying the Order.
+     * @param comparator is the Comparator Specifiying the Order.
      * @param low is the Lower Bound Index (inclusive).
      * @param high is the Upper Bound Index (inclusive).
      * @return true if the Specified Portion of the Array is Sorted, false Otherwise.
@@ -145,7 +145,7 @@ public class SelectionSort {
         // Testing the Sort Method with an Array of Integers which Sorts the Array with a Customised Comparator in Descending Order.
         Comparator<Integer> descending = Comparator.reverseOrder(); SelectionSort.sort(integerArray, descending); show(integerArray);
 
-        // Testing the Sort Method with an Array of Strings which Sorts the Array Lexigraphically in the Natural Order.
+        // Testing the Sort Method with an Array of Strings which Sorts the Array Lexicographically in the Natural Order.
         String[] stringArray = {"Apple", "Nala", "Tigger", "Pusscat", "Spatula", "Knife", "Spoon", "Fork", "Lewis", "Ethan", "Pizza", "Diet Coke", "Bread", "Salad", "Table", "Chairs"};
         SelectionSort.sort(stringArray); show(stringArray);
 
