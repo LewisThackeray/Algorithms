@@ -5,7 +5,7 @@ import java.util.Comparator; // Importing the Comparator Class from the java.uti
  * @date 24/03/2025
  *
  * {@code QuickSort} provides Static Methods for Sorting an Array using <em>Quick Sort</em>, using Generics to ensure the Flexibility of my Implementation so that it supports Customised Sorting
- *  * Orders through the use of Comparator, as well as Generic Data Types through Comparable and Object[].  <em>Quick Sort</em> works as follows:
+ * Orders through the use of Comparator, as well as Generic Data Types through Comparable and Object[].  <em>Quick Sort</em> works as follows:
  *  <ol>
  *      <li>The first step is to choose a <i>pivot</i>, common choices include: the first element, the middle element and the last element.</li>
  *      <li>Then, you rearrange the array so that all the elements less than the pivot are placed to its left, and all elements greater than the pivot are placed to its right.  After this step,
