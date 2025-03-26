@@ -1,4 +1,4 @@
-import java.util.NoSuchElementException; // Importing the NoSuchElementException Clas from the java.util Package to Throw a Runtime Error when Accessing a Non-Existent Item in the Priority Queue.
+import java.util.NoSuchElementException; // Importing the NoSuchElementException Clas from the java.util Package to Throw a Runtime Error when Accessing a Non-Existent Key in the Symbol Table.
 import java.util.Iterator; // Importing the Iterator Class from the java.util Package to use an Iterator to Display the Key: Value Pairs in the Symbol Table by Performing an In-Order Traversal on the Binary Search Tree.
 import java.util.Stack; // Importing Stack Class from the java.util Package to Track Node's Keys during the In-Order Traversal.
 
