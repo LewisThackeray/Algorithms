@@ -222,11 +222,12 @@ public class BinarySearchTree<Key extends Comparable<? super Key>, Value> implem
      */
 
     public static void main(String[] args) {
-        BinarySearchTree<Integer, String> myBinarySearchTree = new BinarySearchTree<>(); myBinarySearchTree.insert(2, "Apple"); myBinarySearchTree.insert(5, "Banana"); myBinarySearchTree.insert(15, "Fox");
-        myBinarySearchTree.insert(67, "Carrot"); myBinarySearchTree.insert(88, "Pants"); myBinarySearchTree.insert(9, "Cup"); myBinarySearchTree.insert(54, "Phone"); myBinarySearchTree.insert(33, "Pen");
+        BinarySearchTree<Integer, String> bst = new BinarySearchTree<>(); bst.insert(2, "Apple"); bst.insert(5, "Banana"); bst.insert(15, "Fox"); bst.insert(67, "Carrot"); bst.insert(88, "Pants");
+        bst.insert(9, "Cup"); bst.insert(54, "Phone"); bst.insert(33, "Pen");
 
-        System.out.println("Size: " + myBinarySearchTree.size()); System.out.println("Contains Key 2? " + myBinarySearchTree.contains(2)); System.out.println("Minimum: " + myBinarySearchTree.min());
-        System.out.println("Maximum: " + myBinarySearchTree.max()); System.out.println("In-Order Traversal: "); for (Integer key: myBinarySearchTree) {System.out.println("Key: " + key + "| Value: " + myBinarySearchTree.search(key));}
+        System.out.println("Size: " + bst.size()); System.out.println("Contains Key 2? " + bst.contains(2)); System.out.println("Minimum: " + bst.min()); System.out.println("Maximum: " + bst.max());
+        System.out.println("In-Order Traversal (Before Deletion): "); for (Integer key: bst) {System.out.println("Key: " + key + "| Value: " + bst.search(key));} bst.delete(2);
+        System.out.println("In-Order Traversal (After Deletion): "); for (Integer key: bst) {System.out.println("Key: " + key + "| Value: " + bst.search(key));}
 
         System.out.println("All Tests Passed Successfully!");
     }

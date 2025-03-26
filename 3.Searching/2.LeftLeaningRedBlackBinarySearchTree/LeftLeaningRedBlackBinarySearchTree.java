@@ -267,7 +267,8 @@ public class LeftLeaningRedBlackBinarySearchTree<Key extends Comparable<? super 
         llrb.insert(67, "Carrot"); llrb.insert(88, "Pants"); llrb.insert(9, "Cup"); llrb.insert(54, "Phone"); llrb.insert(33, "Pen");
 
         System.out.println("Size: " + llrb.size()); System.out.println("Contains Key 2? " + llrb.contains(2)); System.out.println("Minimum: " + llrb.min()); System.out.println("Maximum: " + llrb.max());
-        System.out.println("In-Order Traversal: "); for (Integer key: llrb) {System.out.println("Key: " + key + "| Value: " + llrb.search(key));}
+        System.out.println("In-Order Traversal (Before Deletion): "); for (Integer key: llrb) {System.out.println("Key: " + key + "| Value: " + llrb.search(key));} llrb.delete(2);
+        System.out.println("In-Order Traversal (After Deletion): "); for (Integer key: llrb) {System.out.println("Key: " + key + "| Value: " + llrb.search(key));}
 
         System.out.println("All Tests Passed Successfully!");
     }
