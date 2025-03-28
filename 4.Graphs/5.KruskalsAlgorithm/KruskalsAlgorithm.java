@@ -1,4 +1,4 @@
-package Graphs; // This Package contains the EdgeWeightedDigraph Class which is required to implement PrimsAlgorithm and KruskalsAlgorithm.
+package Graphs; // This Package contains the EdgeWeightedDigraph Class which is required to implement KruskalsAlgorithm.
 
 import java.util.List; import java.util.ArrayList; // Importing the List Interface and ArrayList Class from java.util to Create a List of Edges in the Minimum Spanning Tree (MST).
 import java.util.Map; import java.util.HashMap; // Importing the Map Interface and HashMap Class from java.util to Support the Union-Find Algorithm and Track Connected Componenets in the Graph.
