@@ -47,7 +47,7 @@ public class DirectedGraph<Vertex> {
     }
 
     /**
-     * This method removes a Directed Edge between Two Vertices in the Directed Graoh, and if the Directed Edge exists.
+     * This method removes a Directed Edge between Two Vertices in the Directed Graph, if the Directed Edge exists.
      * @param source of type Vertex is the Source Vertex of the Edge.
      * @param destination of type Vertex is the Destination Vertex of the Edge.
      */
