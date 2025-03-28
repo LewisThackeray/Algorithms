@@ -16,8 +16,8 @@ import Graphs.EdgeWeightedDigraph; // Importing the EdgeWeightedDigraph Class as
  * <p><i>Minimum Spanning Trees (MSTs) are much easier to compute when the Edge Weighted Digraph is connected (if there exists at least one path between a Pair of Vertices), otherwise, you
  * get a Minimum Spanning Forest which is comprised of multiple MSTs.</i></p>
  *
- * {@code PrimsAlgorithm} implements <em>Prim's Algorithm</em> to create a Minimum Spanning Tree (MST) from an Edge Weighted Digraph and uses a Priority Queue to track the Vertices and an
- * Adjacency List to store the Edge Weights.  <em>Prim's Algorithm</em> works as follows:
+ * {@code PrimsAlgorithm} implements <em>Prim's Algorithm</em> to create a Minimum Spanning Tree (MST) from an Edge Weighted Digraph and uses a Priority Queue to track the Vertices and a List to
+ * store the Edge Weights.  <em>Prim's Algorithm</em> works as follows:
  * <ol>
  *     <li>The first step is to choose an arbitary starting vertex and mark this vertex as visited, a priority queue is used to track the vertices based on their current minimum cost.</li>
  *     <li>You then choose the vertex with the smallest cost from the priority queue and find all the edges to this vertex and check their cost.</li>
@@ -26,6 +26,11 @@ import Graphs.EdgeWeightedDigraph; // Importing the EdgeWeightedDigraph Class as
  *     <li>Repeat this process until all the vertices are included in the MST and once all of the vertices are in the MST, the algorithm terminates.</li>
  *     <li></li>
  * </ol>
+ *
+ * <p><b>As previously mentioned, Prim's Algorithm and Kruskal's Algorithm are both methods for computing Minimum Spanning Trees (MSTs), however, they both accomplish this task in different ways,
+ * Kruskal's Algorithm uses a glboal method where it considers all of the edges in the graph at once and builds the MST by selecting edges in order of increasing weight, regardless of their
+ * position in the graph.  Whereas, Prim's Algorithm uses a local method where it grows the MST from a single starting vertex, expanding it step-by-step by adding the cheapest edge connecting
+ * the current tree to a vertex outside it.  To summarise, Prim's Algorithm starts with one edge and grows the MST from there, whereas Kruskal's Algorithm starts with all edges.</b></p>
  *
  * @param Vertex is a Generic Type for Vertices in the Graph.
  */
@@ -39,9 +44,8 @@ public class PrimsAlgorithm<Vertex> {
 
     /**
      * This is the Class Constructor which creates a Minimum Spanning Tree (MST) from an Edge Weighted Digraph.
-     * @param EdgeWeightedDigraph<Vertex> is the Edge Weighted Digraph which we are going to create the Minimum Spanning Tree (MST) from where the Vertices of the Graph are of type Vertex.
+     * @param graph of type EdgeWeightedGraph is the Edge Weighted Digraph which we are going to create the Minimum Spanning Tree (MST) from where the Vertices of the Graph are of type Vertex.
      * @param start of type Vertex is the Vertex which we are going to begin creating the Minimum Spanning Tree (MST) from.
-     * @return the Minimum Spanning Tree (MST) created using Prim's Algorithm.
      */
 
     public PrimsAlgorithm(EdgeWeightedDigraph<Vertex> graph, Vertex start) {
