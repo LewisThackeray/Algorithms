@@ -4,6 +4,9 @@ import java.util.List; // Importing the List Interface from java.util to Create 
 import java.util.Map; // Importing the Map Interface from java.util to Implement the Adjacency List.
 import java.util.NoSuchElementException; // Importing the NoSuchElementException Class from java.util to be Thrown when there is an attempt to access a Vertex which is not in the Graph.
 import java.util.Set; // Importing the Set Interface from java.util to return all the Vertices in the Graph as a Set which prevents Duplicates.
+import java.util.HashSet; // Importing the HashSet Class from java.util to Track the Vertices that have been Visited during a Depth First or Breadth First Search.
+import java.util.Queue; // Importing the Queue Interface from java.util to Store the Vertices in a Graph when Performing a Breadth First Search.
+import java.util.LinkedList; // Importing the LinkedList Class form java.util to Implement the Queue Interface as a Linked List.
 
 /**
  * @author LewisThackeray
@@ -77,6 +80,48 @@ public class UndirectedGraph<Vertex> {
     }
 
     /**
+     * This method performs a Breadth-First Search (BFS) starting at the Specified Vertex.  Breadth First Search is a graph traversal algorithm that explores all the vertices of a graph level by
+     * level.  With a BFS, we visit all the neighbours of a node, and then all the neighbours of the first node visited, and all the neighbours of the second node and so on, before moving further
+     * away from the start node.
+     * @param start of type Vertex is the Vertex which the Breadth-First Search (BFS) begins at.
+     * @return a List of Vertices in the Order in which they were Visited.
+     * @throws NoSuchElementException if the Vertex is not in the Undirected Graph.
+     */
+
+    public List<Vertex> breadthFirstSearch(Vertex start) {
+        if (!adjacencyList.containsKey(start)) throw new NoSuchElementException("Vertex " + start + " is not in the Undirected Graph!");
+        List<Vertex> result = new ArrayList<>(); Set<Vertex> visited = new HashSet<>(); Queue<Vertex> queue = new LinkedList<>(); visited.add(start); queue.add(start);
+        while (!queue.isEmpty()) {
+            Vertex current = queue.poll(); result.add(current);
+            for (Vertex neighbour : adjacencyList.get(current)) {if (!visited.contains(neighbour)) {visited.add(neighbour); queue.add(neighbour);}}
+        } return result;
+    }
+
+    /**
+     * This method performs a Depth-First Search (DFS) starting at the Specified Vertex.  Depth First Search is a graph traversal algorithm that explores as far down one branch as possible before
+     * backtracking to explore other branches.  This method begins the recursive routine to perform a DFS.
+     * @param start of type Vertex is the Vertex which the Depth-First Search (DFS) begins at.
+     * @return a List of Vertices in the Order in which they were Visited.
+     * @throws NoSuchElementException if the Vertex is not in the Undirected Graph.
+     */
+
+    public List<Vertex> depthFirstSearch(Vertex start) {
+        if (!adjacencyList.containsKey(start)) throw new NoSuchElementException("Vertex " + start + " is not in the Undirected Graph!");
+        List<Vertex> result = new ArrayList<>(); Set<Vertex> visited = new HashSet<>(); depthFirstSearch(start, visited, result); return result;
+    }
+
+    /**
+     * This method is an overloaded version of {@code depthFirstSearch} which recursively performs a Depth First Search on the Undirected Graph, starting at the Specified Vertex.
+     * @param vertex of type Vertex is the Vertex which the Depth-First Search (DFS) begins at.
+     * @param visited is a Set which stores the Vertices in the Undirected Graph which have been visited.
+     * @param result is a List of Vertices in the Order in which they were Visited.
+     */
+
+    public void depthFirstSearch(Vertex vertex, Set<Vertex> visited, List<Vertex> result) {
+        visited.add(vertex); result.add(vertex); for (Vertex neighbour : adjacencyList.get(vertex)) {if (!visited.contains(neighbour)) depthFirstSearch(neighbour, visited, result);}
+    }
+
+    /**
      * This method tests the {@code UndirectedGraph} Class by Adding and Removing Vertices and Edges.
      * @param args the Command-Line Arguments.
      */
@@ -86,6 +131,9 @@ public class UndirectedGraph<Vertex> {
         graph.addVertex("Kiwi"); graph.addVertex("Blueberry"); graph.addVertex("Raspberry"); graph.addVertex("Peach"); graph.addVertex("Coconut"); graph.addVertex("Grape");
 
         graph.addEdge("Apple", "Banana"); graph.addEdge("Apple", "Peach"); graph.addEdge("Apple", "Coconut"); graph.addEdge("Apple", "Strawberry"); graph.addEdge("Apple", "Raspberry");
-        System.out.println("Neighbours of Apple: " + graph.getNeighbours("Apple")); System.out.println("All Tests Passed Successfully!");
+        System.out.println("Neighbours of Apple: " + graph.getNeighbours("Apple"));
+
+        System.out.println("Depth-First Search starting at Apple: " + graph.depthFirstSearch("Apple"));
+        System.out.println("Breadth-First Search stating at Apple: " + graph.breadthFirstSearch("Apple")); System.out.println("All Tests Passed Successfully!");
     }
 }
