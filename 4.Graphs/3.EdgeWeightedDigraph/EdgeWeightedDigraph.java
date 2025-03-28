@@ -1,3 +1,5 @@
+package Graphs; // This Package contains the EdgeWeightedDigraph Class which is required to implement PrimsAlgorithm and KruskalsAlgorithm.
+
 import java.util.List; // Importing the List Interface from java.util to Create the List of Neighbours for each Vertex in the Adjacency List.
 import java.util.ArrayList; // Importing the ArrayList Class from java.util to Create the List of Neighbours for each Vertex in the Adjacency List.
 import java.util.Map; // Importing the Map Interface from java.util to Implement the Adjacency List.
@@ -55,6 +57,13 @@ public class EdgeWeightedDigraph<Vertex> {
     public EdgeWeightedDigraph() {adjacencyList = new HashMap<>();}
 
     /**
+     * This method is a Getter Method which returns the Adjacency List of the Edge Weighted Digraph.
+     * @return a Map which contains the Neighbours of Each Vertex in the Edge Weighted Digraph.
+     */
+
+    public Map<Vertex, List<Edge<Vertex>>> getAdjacencyList() {return adjacencyList;}
+
+    /**
      * This method adds a Vertex to the Edge Weighted Diraph if the Vertex isn't already a member.
      * @param vertex of type Vertex is the Vertex to be added to the Edge Weighted Digraph.
      */
@@ -103,8 +112,4 @@ public class EdgeWeightedDigraph<Vertex> {
         graph.addVertex("Stawberry"); graph.addVertex("Raspberry"); graph.addEdge("Apple", "Banana", 4.5); graph.addEdge("Orange", "Kiwi", 2.0); graph.addEdge("Banana", "Strawberry", 0.6);
         graph.removeVertex("Apple"); graph.removeEdge("Banana", "Strawberry"); System.out.println("All Tests Passed Successfully!");
     }
-
-
-
-
 }
