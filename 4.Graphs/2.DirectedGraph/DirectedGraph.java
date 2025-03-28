@@ -4,6 +4,8 @@ import java.util.List; // Importing the List Interface from java.util to Create 
 import java.util.Map; // Importing the Map Interface from java.util to Implement the Adjacency List.
 import java.util.NoSuchElementException; // Importing the NoSuchElementException Class from java.util to be Thrown when there is an attempt to access a Vertex which is not in the Graph.
 import java.util.Set; // Importing the Set Interface from java.util to return all the Vertices in the Graph as a Set which prevents Duplicates.
+import java.util.HashSet; // Importing the HashSet Class from java.util to Track the Visited Vertices when performing Kosajaru's Algorithm.
+import java.util.Stack; // Importing the Stack Class from java.util which is used to find Strongly Connected Components through Kosajaru's Algorithm.
 
 /**
  * @author LewisThackeray
@@ -73,6 +75,44 @@ public class DirectedGraph<Vertex> {
     }
 
     /**
+     * This method implements <em>Kosaraju's Algorithm</em> which is used to find Strongly Connected Components (SCCs) in a Directed Graph.  <em>Kosaraju's Algorithm</em> works as follows:
+     * <ol>
+     *     <li>The First Step is to perform a Depth First Search (DFS) on the Graph, and when a Vertex is Visited it is added to the Stack.</li>
+     *     <li>The Second Step transposes the Graph so that the Direction of the Edges in the Original Graph are Reversed.</li>
+     *     <li>The Final Step works by popping each Vertex from the Stack and for each popped Vertex, you perform a DFS on the Transposed Graph where each DFS Traversal gives one SCC.</li>
+     * </ol>
+     *
+     * @return a List of Lists, where each Inner-List stores a Strongly Connected Component (SCC) in the Directed Graph.
+     */
+
+    public List<List<Vertex>> kosarajusAlgorithm() {
+        Stack<Vertex> stack = new Stack<>(); Set<Vertex> visited = new HashSet();
+        // Perfoming a Depth-First Search on the Graph, and when a Vertex is Visited it is added to the Stack.
+        for (Vertex vertex : adjacencyList.keySet()) {
+            if (!visited.contains(vertex)) {
+                Stack<Vertex> recursionStack = new Stack<>(); recursionStack.push(vertex); while (!recursionStack.isEmpty()) {
+                    Vertex current = recursionStack.peek(); if (!visited.contains(current)) {
+                        visited.add(current); for (Vertex neighbour : getNeighbours(current)) {if (!visited.contains(neighbour)) recursionStack.push(neighbour);}
+                    } else {recursionStack.pop(); stack.push(current);}
+                }
+            }
+        }
+        // Tranposing the Graph so that the Direction of the Edges in the Original Graph are Reversed.
+        Map<Vertex, List<Vertex>> transposedAdjacencyList = new HashMap<>(); for (Vertex vertex : adjacencyList.keySet()) {transposedAdjacencyList.put(vertex, new ArrayList<>());}
+        for (Vertex vertex : adjacencyList.keySet()) {for (Vertex neighbour : adjacencyList.get(vertex)) {transposedAdjacencyList.get(neighbour).add(vertex);}}
+        // Popping each Vertex from the Stack and for each popped Vertex, you perform a DFS on the Transposed Graph where each DFS Traversal gives one SCC.
+        visited.clear(); List<List<Vertex>> stronglyConnectedComponents = new ArrayList<>(); while (!stack.isEmpty()) {
+            Vertex vertex = stack.pop(); if (!visited.contains(vertex)) {
+                List<Vertex> component = new ArrayList<>(); Stack<Vertex> recursionStack = new Stack<>(); recursionStack.push(vertex); while (!recursionStack.isEmpty()) {
+                    Vertex current = recursionStack.pop(); if (!visited.contains(current)) {visited.add(current); component.add(current);
+                        for (Vertex neighbour : transposedAdjacencyList.get(current)) {if (!visited.contains(neighbour)) {recursionStack.push(neighbour);}}
+                    }
+                } stronglyConnectedComponents.add(component);
+            }
+        } return stronglyConnectedComponents;
+    }
+
+    /**
      * This method tests the {@code DirectedGraph} Class by Adding and Removing Vertices and Edges.
      * @param args the Command-Line Arguments.
      */
@@ -82,6 +122,11 @@ public class DirectedGraph<Vertex> {
         graph.addVertex("Kiwi"); graph.addVertex("Blueberry"); graph.addVertex("Raspberry"); graph.addVertex("Peach"); graph.addVertex("Coconut"); graph.addVertex("Grape");
 
         graph.addEdge("Apple", "Banana"); graph.addEdge("Apple", "Peach"); graph.addEdge("Apple", "Coconut"); graph.addEdge("Apple", "Strawberry"); graph.addEdge("Apple", "Raspberry");
-        System.out.println("Neighbours of Apple: " + graph.getNeighbours("Apple")); System.out.println("All Tests Passed Successfully!");
+        System.out.println("Neighbours of Apple: " + graph.getNeighbours("Apple"));
+
+        graph.addEdge("Banana", "Coconut"); graph.addEdge("Coconut", "Apple");  // Creating a Strongly Connected Component of Apple, Bananan and Coconut.
+        List<List<String>> stronglyConnectedComponents = graph.kosarajusAlgorithm(); System.out.println("Strongly Connected Componenets: ");
+        for (List<String> stronglyConnectedComponent : stronglyConnectedComponents) {System.out.println(stronglyConnectedComponent);} System.out.println("All Tests Passed Successfully!");
+        // IT IS IMPORTANT TO REMEMBER THAT STRONGLY CONNECTED COMPONENTS CAN BE COMPRISED OF A SINGLE VERTEX.
     }
 }
