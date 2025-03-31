@@ -53,7 +53,7 @@ public class PrimsAlgorithm<Vertex> {
         edgeTo = new HashMap<>(); weights = new HashMap<>(); marked = new HashSet<>(); priorityQueue = new PriorityQueue<>(Comparator.comparingDouble(EdgeWeightedDigraph.Edge::getWeight));
         for (Vertex vertex : graph.getAdjacencyList().keySet()) {weights.put(vertex, Double.POSITIVE_INFINITY);}
         // Starting with the Specified Index which has been Passed into the Method as an Argument.
-        weights.put(start, 0.0); priorityQueue.offer(new EdgeWeightedDigraph.Edge<>(start, 0.0));
+        weights.put(start, 0.0); priorityQueue.offer(new EdgeWeightedDigraph.Edge<>(start, start, 0.0));
         // Prim's Algorithm.
         while (!priorityQueue.isEmpty()) {
             EdgeWeightedDigraph.Edge<Vertex> edge = priorityQueue.poll(); Vertex addedVertex = edge.getDestination(); if (marked.contains(addedVertex)) continue; marked.add(addedVertex);
@@ -75,7 +75,11 @@ public class PrimsAlgorithm<Vertex> {
      * @return a List of Edges in the Minimum Spanning Tree (MST).
      */
 
-    public List<EdgeWeightedDigraph.Edge<Vertex>> getMinimumSpanningTree() {return new ArrayList<>(edgeTo.values());}
+    public List<EdgeWeightedDigraph.Edge<Vertex>> getMinimumSpanningTree() {
+        List<EdgeWeightedDigraph.Edge<Vertex>> minimumSpanningTree = new ArrayList<>(); for (Vertex vertex : edgeTo.keySet()) {
+            EdgeWeightedDigraph.Edge<Vertex> edge = edgeTo.get(vertex); if (!edge.getSource().equals(edge.getDestination())) minimumSpanningTree.add(edge); // Excluding the Sentinel Edges.
+        } return minimumSpanningTree;
+    }
 
     /**
      * This method tests {@code PrimsAlgorithm} by creating an Edge Weighted Digraph and then performing Prim's Algorithm on the Edge Weighted Digraph to create the Minimum Spanning Tree (MST).

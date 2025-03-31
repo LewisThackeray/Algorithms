@@ -25,15 +25,23 @@ public class EdgeWeightedDigraph<Vertex> {
 
     public static class Edge<Vertex> {
 
-        private Vertex destination; private double weight; // Creating Variables to Store the Destination Vertex of the Edge and the Edge's Weight.
+        private Vertex source; private Vertex destination; private double weight; // Creating Variables to Store the Source and Destination Vertex of the Edge and the Edge's Weight.
 
         /**
          * This is the Class Constructor which creates a Weighted Edge to the Destination Vertex with the Specified Weight.
+         * @param source of type Vertex is the Source Vertex of the Edge.
          * @param destination of type Vertex is the Destination Vertex of the Edge.
          * @param weight is a Double Floating Point Value which Stores the Weight associated with the Edge.
          */
 
-        public Edge(Vertex destination, double weight) {this.destination = destination; this.weight = weight;}
+        public Edge(Vertex source, Vertex destination, double weight) {this.source = source; this.destination = destination; this.weight = weight;}
+
+        /**
+         * This is a Getter Method which gets the Source Vertex of the Edge.
+         * @return a Vertex which is the Source Vertex of the Edge.
+         */
+
+        public Vertex getSource() {return source;}
 
         /**
          * This is a Getter Method which gets the Destination Vertex of the Edge.
@@ -80,7 +88,7 @@ public class EdgeWeightedDigraph<Vertex> {
 
     public void addEdge(Vertex source, Vertex destination, double weight) {
         if (source == null || destination == null) throw new IllegalArgumentException("The Source and Destination Vertices cannot be NULL!"); addVertex(source); addVertex(destination);
-        adjacencyList.get(source).add(new Edge<>(destination, weight));
+        adjacencyList.get(source).add(new Edge<>(source, destination, weight));
     }
 
     /**

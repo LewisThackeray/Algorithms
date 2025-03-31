@@ -49,8 +49,7 @@ public class KruskalsAlgorithm<Vertex> {
         for (Vertex vertex : graph.getAdjacencyList().keySet()) {for (EdgeWeightedDigraph.Edge<Vertex> edge : graph.getAdjacencyList().get(vertex)) {priorityQueue.offer(edge);}}
         // Kruskal's Algorithm.
         while (!priorityQueue.isEmpty() && minimumSpanningTree.size() < graph.getAdjacencyList().size() - 1) {
-            EdgeWeightedDigraph.Edge<Vertex> edge = priorityQueue.poll(); Vertex destination = edge.getDestination(); Vertex source = null;
-            for (Vertex vertex : graph.getAdjacencyList().keySet()) {if (graph.getAdjacencyList().get(vertex).contains(edge)) {source = vertex; break;}} if (source == null) continue;
+            EdgeWeightedDigraph.Edge<Vertex> edge = priorityQueue.poll(); Vertex destination = edge.getDestination(); Vertex source = edge.getSource();
             if (!find(source).equals(find(destination))) {minimumSpanningTree.add(edge); union(source, destination);} // Checking if Adding this Edge Creates a Cycle using Union-Find.
         }
     }

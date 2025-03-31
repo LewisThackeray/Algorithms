@@ -74,12 +74,8 @@ public class DijkstrasAlgorithm<Vertex> {
      */
 
     public List<Vertex> pathTo(EdgeWeightedDigraph<Vertex> graph, Vertex vertex) {
-        if (!distanceTo.containsKey(vertex)) return null; List<Vertex> path = new ArrayList<>(); Vertex current = vertex; path.add(0, current); while (edgeTo.containsKey(current)) {
-            EdgeWeightedDigraph.Edge<Vertex> edge = edgeTo.get(current); Vertex next = null;
-            for (Vertex source : graph.getAdjacencyList().keySet()) {
-                for (EdgeWeightedDigraph.Edge<Vertex> e : graph.getAdjacencyList().get(source)) {if (e == edge) {next = source; break;}} if (next != null) break;
-            } path.add(0, next); current = next;
-        } return path;
+        if (!distanceTo.containsKey(vertex)) return null; List<Vertex> path = new ArrayList<>(); Vertex current = vertex;
+        while (current != null) {path.add(0, current); EdgeWeightedDigraph.Edge<Vertex> edge = edgeTo.get(current); if (edge == null) break; current = edge.getSource();} return path;
     }
 
     /**
