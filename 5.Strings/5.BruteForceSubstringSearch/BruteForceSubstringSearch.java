@@ -36,7 +36,7 @@ public class BruteForceSubstringSearch {
     }
 
     /**
-     * This method tests the {@code BruteForceSubstringSearch} class by creating pattern and text Strings and then performing a Brute Force SubstringS Search.
+     * This method tests the {@code BruteForceSubstringSearch} class by creating pattern and text Strings and then performing a Brute Force Substring Search.
      * @param args the Command Line Arguments.
      */
 
