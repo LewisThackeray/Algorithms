@@ -31,7 +31,7 @@ public class BruteForceSubstringSearch {
      */
 
     public static boolean search(String text, String pattern) {
-        if (text == null || pattern == null) return false; if (pattern.length() == 0) return true; if (pattern.length() > text.length()) return false; int N = text.length(); int M = pattern.length();
+        if (text == null || pattern == null || pattern.length() == 0 || pattern.length() > text.length()) return false; int N = text.length(); int M = pattern.length();
         for (int i = 0; i <= N - M; i++) {boolean match = true; for (int j = 0; j < M; j++) {if (text.charAt(i + j) != pattern.charAt(j)) {match = false; break;}} if (match) return true;} return false;
     }
 

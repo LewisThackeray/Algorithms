@@ -44,7 +44,7 @@ public class KnuthMorrisPrattSubstringSearch {
      */
 
     public static boolean search(String text, String pattern) {
-        if (text == null || pattern == null) return false; if (pattern.length() == 0) return true; if (pattern.length() > text.length()) return false;
+        if (text == null || pattern == null || pattern.length() == 0 || pattern.length() > text.length()) return false;
         int N = text.length(); int M = pattern.length(); int[] prefixTable = preProcess(pattern);
         int i = 0; int j = 0; while (i < N) {if (text.charAt(i) == pattern.charAt(j)) {i++; j++; if (j == M) return true;} else {if (j > 0) {j = prefixTable[j - 1];} else {i++;}}} return false;
     }
@@ -58,6 +58,5 @@ public class KnuthMorrisPrattSubstringSearch {
         String text = "The cat sat on the mat!"; String pattern = "cat"; System.out.println("Does 'cat' exist in 'The cat sat on the mat?' " + search(text, pattern));
         System.out.println("Does 'rat' exist in 'The cat sat on the mat?' " + search(text, "rat")); System.out.println("All Tests Passed Successfully!");
     }
-
 
 }
